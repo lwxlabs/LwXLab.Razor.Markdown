@@ -1,0 +1,352 @@
+<!-- SourceWorker:Generated; ArtifactId=3f15daf8-0d1c-41af-ba91-aaf4807e1531; Status=Generated -->
+
+formatVersion: 5
+project:
+  id: "cd807ca9-e8d2-4020-a146-8b5093b8c75a"
+  name: "LwXLab.Markdown"
+  rootPath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown"
+lastScan:
+  id: "d3f3a2bc-8d20-4afe-80c4-a8b3984351b8"
+  startedUtc: "2026-06-10T19:07:33.9340102+00:00"
+  finishedUtc: "2026-06-10T19:07:33.9758224+00:00"
+  status: Completed
+git:
+  branch: ""
+  hasUncommittedChanges: false
+storage:
+  provider: Localite
+  mode: table-backed
+  schemaVersion: 1
+contextFiles:
+  - path: "CONTEXT.md"
+    type: ContextFile
+    status: Generated
+  - path: "agent-handoff.md"
+    type: ContextFile
+    status: Generated
+  - path: "project.md"
+    type: ContextFile
+    status: Generated
+  - path: "architecture.md"
+    type: ContextFile
+    status: Generated
+  - path: "current-state.md"
+    type: ContextFile
+    status: Generated
+  - path: "tasks.md"
+    type: ContextFile
+    status: Generated
+  - path: "ai-handoff.md"
+    type: ContextFile
+    status: Generated
+  - path: "scans/latest-scan.md"
+    type: ContextFile
+    status: Generated
+  - path: "branches/current.md"
+    type: ContextFile
+    status: Generated
+recipes:
+  - id: "backend-docs-compact"
+    path: ".ai-context/recipes/backend-docs-compact.yaml"
+    outputPath: "instructions/Result/Backend"
+stale:
+  hasStaleContext: true
+  staleFiles: []
+  missingGeneratedFiles: []
+  manuallyModifiedFiles: []
+artifacts:
+  total: 40
+  generated: 40
+  stale: 0
+  missing: 0
+  manuallyModified: 0
+  orphaned: 3
+  deprecated: 0
+cleanup:
+  recommended: true
+  previewCommand: "sourceworker cleanup-preview C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown"
+codeIntelligence:
+  symbols:
+    total: 29
+    classes: 5
+    interfaces: 0
+    methods: 21
+  routes:
+    total: 0
+  serviceRegistrations:
+    total: 1
+  configurationUsages:
+    total: 0
+  tests:
+    total: 0
+flows:
+  total: 3
+  highConfidence: 0
+  mediumConfidence: 0
+  lowConfidence: 3
+scanCompleteness:
+  csharpFiles: 8
+  symbols: 29
+  routes: 0
+  flows: 3
+  warning: ""
+contextBrowser:
+  files:
+    total: 0
+  searchable:
+    enabled: true
+outputs:
+  internal:
+    - id: internal-backend-docs
+      path: ".ai-context/docs/backend"
+      files: 7
+      status: Generated
+  external:
+    - id: external-backend-docs
+      path: "instructions/Result/Backend"
+      files: 7
+      status: Generated
+packs:
+  total: 5
+  items:
+    - id: ai-handoff
+      path: ".ai-context/packs/ai-handoff.pack.yaml"
+      fileCount: 3
+      freshness: unknown
+    - id: backend-docs
+      path: ".ai-context/packs/backend-docs.pack.yaml"
+      fileCount: 7
+      freshness: unknown
+    - id: onboarding
+      path: ".ai-context/packs/onboarding.pack.yaml"
+      fileCount: 3
+      freshness: unknown
+    - id: current-branch
+      path: ".ai-context/packs/current-branch.pack.yaml"
+      fileCount: 3
+      freshness: unknown
+    - id: dogfood-feedback
+      path: ".ai-context/packs/dogfood-feedback.pack.yaml"
+      fileCount: 3
+      freshness: unknown
+exports:
+  total: 1
+  items:
+    - id: backend-docs-compact
+      target: MarkdownFolder
+      path: "instructions/Result/Backend"
+      lastExportUtc: "2026-06-10T19:07:33.9758224+00:00"
+docs:
+  internalBackendDocs:
+    path: ".ai-context/docs/backend"
+    fileCount: 7
+    status: Generated
+files:
+  - path: "_Imports.razor"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\_Imports.razor"
+    kind: Other
+    extension: ".razor"
+    sizeBytes: 180
+    lastModifiedUtc: "2026-06-04T23:35:27.0000000+00:00"
+    sha256: "223b48f2af8e7e62bba0f9433c28492eb110bf24eef9023de3275258d7817d3d"
+    changeKind: Unchanged
+  - path: "Components/MarkDown.razor"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Components\\MarkDown.razor"
+    kind: Other
+    extension: ".razor"
+    sizeBytes: 31873
+    lastModifiedUtc: "2026-06-10T18:52:36.3964556+00:00"
+    sha256: "ba05ae6e75ec5f966c0d0f14cc29e082320702081676b84d8643fc1099e0b5b5"
+    changeKind: Changed
+  - path: "Extensions/ServiceCollectionExtensions.cs"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Extensions\\ServiceCollectionExtensions.cs"
+    kind: Source
+    extension: ".cs"
+    sizeBytes: 551
+    lastModifiedUtc: "2026-06-04T23:35:28.0000000+00:00"
+    sha256: "659392980fbfac88c557d3058967130816f24a9aaec8c9acd8fc6e375627fb80"
+    changeKind: Unchanged
+  - path: "instructions/Result/Backend/00-project-index.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\00-project-index.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 1741
+    lastModifiedUtc: "2026-06-07T21:42:57.5885372+00:00"
+    sha256: "e1e1ca52de49762e1af32586346b09ee1fa238fa24c13636bcb3f7d2e7d20eff"
+    changeKind: Changed
+  - path: "instructions/Result/Backend/01-project-structure.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\01-project-structure.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 244
+    lastModifiedUtc: "2026-06-07T21:42:57.6131157+00:00"
+    sha256: "6b57b24496328d6a5bba92c84fb8a38eb84d816f52037af2b87be51d6b0e6ed6"
+    changeKind: Changed
+  - path: "instructions/Result/Backend/02-architecture.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\02-architecture.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 219
+    lastModifiedUtc: "2026-06-07T21:42:57.6246431+00:00"
+    sha256: "e3a52f84d9f584a561679698ea7779f4a795b9de527a803fa4f65fbabac9da79"
+    changeKind: Changed
+  - path: "instructions/Result/Backend/03-important-files-and-flows.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\03-important-files-and-flows.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 637
+    lastModifiedUtc: "2026-06-07T21:42:57.6397521+00:00"
+    sha256: "84f14ba8619dc9fdbccfcfe26a53a4ec05cf59460bde779e08aaf9360148c296"
+    changeKind: Changed
+  - path: "instructions/Result/Backend/04-configuration-and-secrets.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\04-configuration-and-secrets.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 441
+    lastModifiedUtc: "2026-06-07T21:42:57.6532809+00:00"
+    sha256: "6deded9c4e4dcbee944992abf4dd2be135f3c0d5975fd1ece5e0b0e974e60b55"
+    changeKind: Changed
+  - path: "instructions/Result/Backend/05-tasks-and-risks.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\05-tasks-and-risks.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 248
+    lastModifiedUtc: "2026-06-07T21:42:57.6653903+00:00"
+    sha256: "035a3369e7e865826e8fb077db5987faa02c9b74ac702c477cf1ab8c14d089da"
+    changeKind: Changed
+  - path: "instructions/Result/Backend/06-verification-checklist.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\06-verification-checklist.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 825
+    lastModifiedUtc: "2026-06-07T21:42:57.6784188+00:00"
+    sha256: "ad58f38f2d978d0c51a47ac0eaa3644c2bdbe2a6a5e1152c2bd570b774a0c552"
+    changeKind: Changed
+  - path: "instructions/Result/Backend/08-code-snippets.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\08-code-snippets.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 639
+    lastModifiedUtc: "2026-06-07T21:42:57.6894966+00:00"
+    sha256: "285b96d69881f3c9b5ac7b038ae78992188f9b8ce10f7204de0845728a2ae970"
+    changeKind: Changed
+  - path: "instructions/Result/Backend/09-reading-guide.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\09-reading-guide.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 1039
+    lastModifiedUtc: "2026-06-07T21:42:57.7006637+00:00"
+    sha256: "360e36daabcff5eb68beb0c9a375e4512c9d1798f113e4ee01e3b87c22b1de71"
+    changeKind: Changed
+  - path: "instructions/Result/Backend/README.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\instructions\\Result\\Backend\\README.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 1434
+    lastModifiedUtc: "2026-06-07T21:42:57.5995997+00:00"
+    sha256: "79584064de836b82e8cf16fb674734c1faff08d184e25c4b1d12c7e3c5d0054d"
+    changeKind: Changed
+  - path: "LwXLab.Markdown.csproj"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\LwXLab.Markdown.csproj"
+    kind: Project
+    extension: ".csproj"
+    sizeBytes: 1053
+    lastModifiedUtc: "2026-06-04T23:37:01.0000000+00:00"
+    sha256: "c27ccb863542b2bc9b1fe393583f81d2de6ab71553e57399ac04047395dbb3c5"
+    changeKind: Unchanged
+  - path: "Models/LwMarkdownButton.cs"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Models\\LwMarkdownButton.cs"
+    kind: Source
+    extension: ".cs"
+    sizeBytes: 437
+    lastModifiedUtc: "2026-06-04T23:35:27.0000000+00:00"
+    sha256: "f6edc67af4a5ca21a6ad90de60dabf325ebecaf4d09d937c79c705b92afd598e"
+    changeKind: Unchanged
+  - path: "Models/LwMarkdownSplitOrientation.cs"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Models\\LwMarkdownSplitOrientation.cs"
+    kind: Source
+    extension: ".cs"
+    sizeBytes: 114
+    lastModifiedUtc: "2026-06-06T19:25:59.6205798+00:00"
+    sha256: "f1142aeda6d77cb6321c98be8d2f0352f27d72057762e7b9217dacf9ae9c8055"
+    changeKind: Unchanged
+  - path: "Models/LwMarkdownStats.cs"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Models\\LwMarkdownStats.cs"
+    kind: Source
+    extension: ".cs"
+    sizeBytes: 134
+    lastModifiedUtc: "2026-06-10T14:56:33.8729241+00:00"
+    sha256: "178f1cfd3f6f996c2269d472b3524d47f8d467fae9f688f84e6fee50fe0567e8"
+    changeKind: Changed
+  - path: "Models/LwMarkdownViewMode.cs"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Models\\LwMarkdownViewMode.cs"
+    kind: Source
+    extension: ".cs"
+    sizeBytes: 111
+    lastModifiedUtc: "2026-06-06T19:25:53.9025685+00:00"
+    sha256: "ef2738f16cea1234b8360f983f7d25c65f581f9705ccd3cf2f305e8b4c97fcd9"
+    changeKind: Unchanged
+  - path: "Options/LwMarkdownEditorOptions.cs"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Options\\LwMarkdownEditorOptions.cs"
+    kind: Source
+    extension: ".cs"
+    sizeBytes: 887
+    lastModifiedUtc: "2026-06-04T23:35:27.0000000+00:00"
+    sha256: "edfac92a5b4edaec6c6b4284ab1ba2a76a3060cc7014e57d3aba804b80415582"
+    changeKind: Unchanged
+  - path: "Options/LwMarkdownOptions.cs"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Options\\LwMarkdownOptions.cs"
+    kind: Source
+    extension: ".cs"
+    sizeBytes: 1381
+    lastModifiedUtc: "2026-06-09T21:45:54.8602781+00:00"
+    sha256: "ff2234d7171b0eb95ad7189b97d7e414472859279687267b13d9bfae775c720a"
+    changeKind: Changed
+  - path: "README.md"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\README.md"
+    kind: Markdown
+    extension: ".md"
+    sizeBytes: 3269
+    lastModifiedUtc: "2026-06-09T19:36:59.0432183+00:00"
+    sha256: "93a8aac658579f74d7ab0bb4548f1b86d14e0e94c4707d0698e898dc910c2668"
+    changeKind: Unchanged
+  - path: "Sample/SampleUsage - Copy.razor"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Sample\\SampleUsage - Copy.razor"
+    kind: Other
+    extension: ".razor"
+    sizeBytes: 938
+    lastModifiedUtc: "2026-06-09T16:14:43.2413019+00:00"
+    sha256: "07ef768a804ec6c87394c6babeddd42fb14997731d71882e45c4ff03d5e091eb"
+    changeKind: New
+  - path: "Sample/SampleUsage.razor"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Sample\\SampleUsage.razor"
+    kind: Other
+    extension: ".razor"
+    sizeBytes: 885
+    lastModifiedUtc: "2026-06-09T19:38:59.2775140+00:00"
+    sha256: "a94a8a3f3695e1cae1f8ed9a5a23ec2baaab83483a5cd0a4b966da1b3b76ae9d"
+    changeKind: Changed
+  - path: "Services/LwMarkdownRenderer.cs"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\Services\\LwMarkdownRenderer.cs"
+    kind: Source
+    extension: ".cs"
+    sizeBytes: 1127
+    lastModifiedUtc: "2026-06-04T23:36:30.0000000+00:00"
+    sha256: "d8ecade82f21a8e1d70e245adc5c555aa31ad1d790b456c5cea7961c77372288"
+    changeKind: Unchanged
+  - path: "wwwroot/lwxlab-markdown.css"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\wwwroot\\lwxlab-markdown.css"
+    kind: Other
+    extension: ".css"
+    sizeBytes: 18800
+    lastModifiedUtc: "2026-06-10T18:52:25.3569387+00:00"
+    sha256: "1aba77152ba4e5a93a2ec4761076d8ead0e07c3a30cc523145b7eafbc074fecd"
+    changeKind: Changed
+  - path: "wwwroot/lwxlab-markdown.js"
+    absolutePath: "C:\\Users\\louie\\source\\lwxlabs\\libs\\LwXLab.Markdown\\wwwroot\\lwxlab-markdown.js"
+    kind: Other
+    extension: ".js"
+    sizeBytes: 15736
+    lastModifiedUtc: "2026-06-10T18:52:09.4940541+00:00"
+    sha256: "97c5f80e29c2632b2e958460dc2a462911fff0d2d99731aed9d608cb86df574a"
+    changeKind: Changed

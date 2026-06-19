@@ -1,0 +1,42 @@
+@page "/markdown-demo"
+
+<LwXLab.MarkDown @bind-Value="markdown"
+                 ValueHTMLChanged="OnHtmlChanged"
+                 EnableEdit="true"
+                 EnableMonaco="true"
+                 EnableMermaid="true"
+                 EnableHighlight="true"
+                 Height="70vh"
+                 Width="100%"
+                 SplitView="true"
+                 AutoSaveEnabled="true"
+                 AutoSaveId="demo-markdown" />
+
+<h3>Rendered HTML</h3>
+<pre>@html</pre>
+
+@code {
+    private string? markdown = @"
+# LwXLab Markdown
+
+```mermaid
+flowchart TD
+    A[Write Markdown] --> B[Render with Markdig]
+    B --> C[Enhance Mermaid]
+    B --> D[Highlight code]
+```
+
+```csharp
+Console.WriteLine(""Hello markdown"");
+```
+";
+
+    private string? html;
+
+    private Task OnHtmlChanged(string value)
+    {
+        html = value;
+        return Task.CompletedTask;
+    }
+}
+Do not delete

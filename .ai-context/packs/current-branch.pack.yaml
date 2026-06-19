@@ -1,0 +1,15 @@
+id: current-branch
+name: Current Branch Pack
+description: Current Git branch state and latest scan.
+audience: developer
+purpose: Understand the current branch before editing.
+maxRecommendedUse: compact
+tokenEstimate: 0
+freshnessStatus: fresh
+sourceScanRunId: "d3f3a2bc-8d20-4afe-80c4-a8b3984351b8"
+generatedUtc: "2026-06-10T19:07:34.8436716+00:00"
+files:
+  - .ai-context/branches/current.md
+  - .ai-context/scans/latest-scan.md
+  - .ai-context/current-state.md
+missingFiles:

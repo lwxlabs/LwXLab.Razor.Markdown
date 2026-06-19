@@ -1,0 +1,22 @@
+id: backend-docs
+name: Backend Docs Pack
+description: Understand backend architecture, flows, configuration, tasks, and verification.
+audience: developer
+purpose: Backend developer handoff.
+maxRecommendedUse: compact
+tokenEstimate: 0
+freshnessStatus: fresh
+sourceScanRunId: "d3f3a2bc-8d20-4afe-80c4-a8b3984351b8"
+generatedUtc: "2026-06-10T19:07:34.8436716+00:00"
+files:
+  - .ai-context/docs/backend/00-project-index.md
+  - .ai-context/docs/backend/README.md
+  - .ai-context/docs/backend/01-project-structure.md
+  - .ai-context/docs/backend/02-architecture.md
+  - .ai-context/docs/backend/03-important-files-and-flows.md
+  - .ai-context/docs/backend/04-configuration-and-secrets.md
+  - .ai-context/docs/backend/05-tasks-and-risks.md
+  - .ai-context/docs/backend/06-verification-checklist.md
+  - .ai-context/docs/backend/08-code-snippets.md
+  - .ai-context/docs/backend/09-reading-guide.md
+missingFiles:
