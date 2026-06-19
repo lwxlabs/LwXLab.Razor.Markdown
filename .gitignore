@@ -27,7 +27,7 @@ Desktop.ini
 !docs/**/*.md
 
 # sourceworker
-ai-context/
+.ai-context/
 instructions/
 
 # Environment / local secrets
