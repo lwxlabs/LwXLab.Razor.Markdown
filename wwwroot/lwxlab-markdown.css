@@ -280,7 +280,7 @@
     outline: none;
     padding: 16px;
     font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-    font-size: 14px;
+    font-size: var(--lwx-md-editor-font-size, 14px);
     line-height: 1.6;
     background: transparent;
     color: inherit;
@@ -292,7 +292,9 @@
 }
 
 .lwx-md-preview {
+    min-width: 0;
     padding: 24px 32px;
+    font-size: var(--lwx-md-preview-font-size, 14px);
     line-height: 1.6;
     word-wrap: break-word;
 }
@@ -555,4 +557,127 @@
     .lwx-md-btn-text { display: none; }
     .lwx-md-toolbar { padding: 0 4px; gap: 4px; }
     .lwx-md-view-modes { gap: 0; }
+}
+
+
+/* Generic line-oriented document rendering.
+   Enable with EnableLineStyling + PreservePreviewLineBreaks. */
+.lwx-md-line-document {
+    display: block;
+    min-width: max-content;
+    font-family: "Cascadia Code", "Cascadia Mono", Consolas, monospace;
+    white-space: pre;
+}
+
+.lwx-md-source-line {
+    display: block;
+    min-height: 1.4em;
+    padding: 0 8px;
+    border-left: 3px solid transparent;
+}
+
+.lwx-md-source-line:hover {
+    background: rgba(127, 127, 127, 0.08);
+}
+
+/* Optional built-in log classes. Consumers can use any custom CSS class instead. */
+.monaco-editor .lwx-log-agent,
+.lwx-md-source-line.lwx-log-agent {
+    background: rgba(188, 140, 255, 0.10);
+    border-left: 3px solid #bc8cff;
+}
+.monaco-editor .lwx-log-agent-text,
+.lwx-md-source-line.lwx-log-agent { color: #d2a8ff; }
+
+.monaco-editor .lwx-log-looking-up,
+.lwx-md-source-line.lwx-log-looking-up {
+    background: rgba(88, 166, 255, 0.10);
+    border-left: 3px solid #58a6ff;
+}
+.monaco-editor .lwx-log-looking-up-text,
+.lwx-md-source-line.lwx-log-looking-up { color: #79c0ff; }
+
+.monaco-editor .lwx-log-running,
+.lwx-md-source-line.lwx-log-running {
+    background: rgba(210, 153, 34, 0.10);
+    border-left: 3px solid #d29922;
+}
+.monaco-editor .lwx-log-running-text,
+.lwx-md-source-line.lwx-log-running { color: #e3b341; }
+
+.monaco-editor .lwx-log-success,
+.lwx-md-source-line.lwx-log-success {
+    background: rgba(63, 185, 80, 0.10);
+    border-left: 3px solid #3fb950;
+}
+.monaco-editor .lwx-log-success-text,
+.lwx-md-source-line.lwx-log-success { color: #56d364; }
+
+.monaco-editor .lwx-log-failure,
+.lwx-md-source-line.lwx-log-failure {
+    background: rgba(248, 81, 73, 0.13);
+    border-left: 3px solid #f85149;
+}
+.monaco-editor .lwx-log-failure-text,
+.lwx-md-source-line.lwx-log-failure { color: #ff7b72; }
+
+.monaco-editor .lwx-log-retry,
+.lwx-md-source-line.lwx-log-retry {
+    background: rgba(219, 109, 40, 0.10);
+    border-left: 3px solid #db6d28;
+}
+.monaco-editor .lwx-log-retry-text,
+.lwx-md-source-line.lwx-log-retry { color: #ffa657; }
+
+
+/* Optional viewport fitting. This is opt-in so existing editor behavior remains unchanged. */
+.lwx-md-fit-content .lwx-md-editor-pane,
+.lwx-md-fit-content .lwx-md-preview {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.lwx-md-fit-content .lwx-md-textarea {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    overflow-x: hidden;
+}
+
+.lwx-md-fit-content .lwx-md-preview,
+.lwx-md-fit-content .lwx-md-preview p,
+.lwx-md-fit-content .lwx-md-preview li,
+.lwx-md-fit-content .lwx-md-preview blockquote,
+.lwx-md-fit-content .lwx-md-preview td,
+.lwx-md-fit-content .lwx-md-preview th,
+.lwx-md-fit-content .lwx-md-source-line {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.lwx-md-fit-content .lwx-md-preview pre,
+.lwx-md-fit-content .lwx-md-preview pre code,
+.lwx-md-fit-content .lwx-md-preview code,
+.lwx-md-fit-content .lwx-md-line-document,
+.lwx-md-fit-content .lwx-md-source-line {
+    min-width: 0;
+    max-width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    overflow-x: hidden;
+}
+
+.lwx-md-fit-content .lwx-md-preview table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.lwx-md-fit-content .lwx-md-preview img,
+.lwx-md-fit-content .lwx-md-preview svg,
+.lwx-md-fit-content .lwx-md-preview video,
+.lwx-md-fit-content .lwx-md-preview canvas {
+    max-width: 100%;
+    height: auto;
 }

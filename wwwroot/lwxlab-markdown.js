@@ -1,6 +1,8 @@
 const editors = new Map();
 const instanceOptions = new Map();
 const linkedScrollStates = new Map();
+const lineDecorationCollections = new Map();
+const lineStyleElements = new Map();
 let monacoLoaderPromise = null;
 let mermaidPromise = null;
 let highlightPromise = null;
@@ -33,6 +35,9 @@ export async function init(rootId, editorId, previewId, resizerId, dotNetRef, op
                 automaticLayout: options.editor.automaticLayout !== false,
                 lineNumbers: options.editor.lineNumbers || 'on',
                 wordWrap: options.editor.wordWrap || 'on',
+                wrappingIndent: options.editor.wrappingIndent || 'same',
+                wrappingStrategy: options.editor.wrappingStrategy || 'advanced',
+                scrollbar: options.editor.scrollbar || { horizontal: 'auto', alwaysConsumeMouseWheel: false },
                 minimap: options.editor.minimap || { enabled: false },
                 tabSize: options.editor.tabSize || 2,
                 wordBasedSuggestions: options.editor.wordBasedSuggestions || 'allDocuments',
@@ -50,11 +55,13 @@ export async function init(rootId, editorId, previewId, resizerId, dotNetRef, op
             editor.onDidChangeModelContent(() => {
                 const value = editor.getValue();
                 textarea.value = value;
+                applyEditorLineStyles(rootId, editorId);
                 clearTimeout(debounce);
                 debounce = setTimeout(() => dotNetRef.invokeMethodAsync('UpdateValueFromJs', value), 80);
             });
 
             editors.set(editorId, editor);
+            applyEditorLineStyles(rootId, editorId);
             initLinkedScrolling(rootId, editorId, previewId);
         } catch (error) {
             console.warn('LwXLab.Markdown: Monaco failed, using textarea fallback.', error);
@@ -238,6 +245,122 @@ function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
 }
 
+function applyEditorLineStyles(rootId, editorId) {
+    const editor = editors.get(editorId);
+    const config = instanceOptions.get(rootId)?.lineStyling;
+
+    if (!editor || !config?.enabled) {
+        clearEditorLineStyles(editorId);
+        return;
+    }
+
+    const model = editor.getModel?.();
+    if (!model || !window.monaco) return;
+
+    const decorations = [];
+    const rules = Array.isArray(config.rules) ? config.rules : [];
+    const runtimeClasses = ensureEditorLineStyleSheet(editorId, rules);
+
+    for (let lineNumber = 1; lineNumber <= model.getLineCount(); lineNumber++) {
+        const text = model.getLineContent(lineNumber);
+
+        for (let ruleIndex = 0; ruleIndex < rules.length; ruleIndex++) {
+            const rule = rules[ruleIndex];
+            if (!rule?.applyToEditor || !rule.pattern || (!rule.cssClass && !rule.cssStyle)) continue;
+
+            let regex;
+            try {
+                regex = new RegExp(rule.pattern, rule.ignoreCase ? 'i' : '');
+            } catch {
+                continue;
+            }
+
+            const match = regex.exec(text);
+            if (!match) continue;
+            if (rule.matchWholeLine && (match.index !== 0 || match[0].length !== text.length)) continue;
+
+            const wholeLineClasses = [];
+            const inlineClasses = [];
+            if (rule.cssClass) {
+                wholeLineClasses.push(rule.cssClass);
+                inlineClasses.push(`${rule.cssClass}-text`);
+            }
+            if (runtimeClasses[ruleIndex]) {
+                wholeLineClasses.push(runtimeClasses[ruleIndex]);
+                inlineClasses.push(`${runtimeClasses[ruleIndex]}-text`);
+            }
+
+            decorations.push({
+                range: new window.monaco.Range(
+                    lineNumber,
+                    1,
+                    lineNumber,
+                    Math.max(1, text.length + 1)),
+                options: {
+                    isWholeLine: true,
+                    className: wholeLineClasses.join(' '),
+                    inlineClassName: inlineClasses.join(' ')
+                }
+            });
+            break;
+        }
+    }
+
+    let collection = lineDecorationCollections.get(editorId);
+    if (!collection) {
+        collection = editor.createDecorationsCollection();
+        lineDecorationCollections.set(editorId, collection);
+    }
+
+    collection.set(decorations);
+}
+
+function ensureEditorLineStyleSheet(editorId, rules) {
+    removeEditorLineStyleSheet(editorId);
+
+    const safeEditorId = String(editorId).replace(/[^a-zA-Z0-9_-]/g, '-');
+    const runtimeClasses = new Array(rules.length).fill('');
+    const cssRules = [];
+
+    for (let index = 0; index < rules.length; index++) {
+        const cssStyle = rules[index]?.cssStyle?.trim();
+        if (!cssStyle) continue;
+
+        const className = `lwx-md-runtime-line-${safeEditorId}-${index}`;
+        runtimeClasses[index] = className;
+        cssRules.push(`.monaco-editor .${className}{${cssStyle}}`);
+        cssRules.push(`.monaco-editor .${className}-text{${cssStyle}}`);
+    }
+
+    if (cssRules.length > 0) {
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.dataset.lwxMarkdownEditor = editorId;
+        style.textContent = cssRules.join('\n');
+        document.head.appendChild(style);
+        lineStyleElements.set(editorId, style);
+    }
+
+    return runtimeClasses;
+}
+
+function removeEditorLineStyleSheet(editorId) {
+    const style = lineStyleElements.get(editorId);
+    if (style) {
+        style.remove();
+        lineStyleElements.delete(editorId);
+    }
+}
+
+function clearEditorLineStyles(editorId) {
+    const collection = lineDecorationCollections.get(editorId);
+    if (collection) {
+        collection.clear();
+        lineDecorationCollections.delete(editorId);
+    }
+    removeEditorLineStyleSheet(editorId);
+}
+
 export async function enhancePreview(previewId, options) {
     const preview = document.getElementById(previewId);
     if (!preview) return;
@@ -257,6 +380,8 @@ export function setEditorValue(editorId, value) {
         const position = editor.getPosition();
         editor.setValue(value || '');
         if (position) editor.setPosition(position);
+        const root = editor.getDomNode?.()?.closest?.('.lwx-md');
+        if (root?.id) applyEditorLineStyles(root.id, editorId);
         return;
     }
 
@@ -408,6 +533,9 @@ export function updateOptions(rootId, editorId, options) {
             automaticLayout: options.editor.automaticLayout !== false,
             lineNumbers: options.editor.lineNumbers || 'on',
             wordWrap: options.editor.wordWrap || 'on',
+            wrappingIndent: options.editor.wrappingIndent || 'same',
+            wrappingStrategy: options.editor.wrappingStrategy || 'advanced',
+            scrollbar: options.editor.scrollbar || { horizontal: 'auto', alwaysConsumeMouseWheel: false },
             minimap: options.editor.minimap || { enabled: false },
             tabSize: options.editor.tabSize || 2,
             wordBasedSuggestions: options.editor.wordBasedSuggestions || 'allDocuments',
@@ -426,9 +554,12 @@ export function updateOptions(rootId, editorId, options) {
         }
         setTimeout(() => editor.layout(), 0);
     }
+
+    applyEditorLineStyles(rootId, editorId);
 }
 
 export function dispose(editorId) {
+    clearEditorLineStyles(editorId);
     const editor = editors.get(editorId);
     if (editor) {
         editor.dispose();

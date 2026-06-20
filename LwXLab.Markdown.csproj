@@ -1,26 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
-  <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageId>LwXLab.Markdown</PackageId>
-    <Title>LwXLab Markdown Editor</Title>
-    <Description>Blazor Markdown editor/preview component using Monaco Editor, Markdig, Mermaid.js and highlight.js.</Description>
-    <Authors>Louie Willems;LwXLab</Authors>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryType>git</RepositoryType>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <StaticWebAssetBasePath>_content/LwXLab.Markdown</StaticWebAssetBasePath>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PackageId>LwXLab.Razor.Markdown</PackageId>
+		<Version>1.0.0-preview.3</Version>
+		<Authors>LwXLabs</Authors>
+		<Title>LwXLab Markdown Editor</Title>
+		<Description>Blazor Markdown editor/preview component.</Description>
+		<PackageReleaseNotes>Adds preview font sizing and opt-in fit-to-width wrapping for Monaco, textarea, preview, line-oriented logs, code blocks, tables, and media. Retains regex line styling with CSS classes or direct CSS declarations.</PackageReleaseNotes>
+		<Authors>LwXLabs</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/lwxlabs/LwXLab.Razor.Markdown</RepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
+		<RepositoryType>git</RepositoryType>
+		<IncludeSymbols>true</IncludeSymbols>
+		
+		<StaticWebAssetBasePath>_content/LwXLab.Markdown</StaticWebAssetBasePath>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="/" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.37.0" />
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Markdig" Version="0.37.0" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 </Project>

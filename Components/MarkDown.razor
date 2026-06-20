@@ -10,8 +10,8 @@
 @inject IJSRuntime JS
 
 <div id="@_rootId"
-     class="lwx-md @Theme @CssClass @(FullScreen ? "lwx-md-fullscreen" : null) @(EffectiveEnableEdit ? "lwx-md-editable" : "lwx-md-readonly")"
-     style="height:@Height;width:@Width;min-height:@MinHeight;max-height:@MaxHeight;">
+     class="lwx-md @Theme @CssClass @(FullScreen ? "lwx-md-fullscreen" : null) @(EffectiveEnableEdit ? "lwx-md-editable" : "lwx-md-readonly") @(FitContentToWidth ? "lwx-md-fit-content" : null)"
+     style="@RootStyle">
     @if (ShowToolbar)
     {
         <div class="lwx-md-toolbar">
@@ -171,6 +171,7 @@
     private LwMarkdownRenderer? _renderer;
     private string _html = string.Empty;
     private string _lastRenderedValue = string.Empty;
+    private string _lastRenderSignature = string.Empty;
     private bool _monacoReady;
     private LwMarkdownStats _stats;
     private string? _lastAutoSaveText;
@@ -234,6 +235,16 @@
     [Parameter] public string Width { get; set; } = "100%";
     [Parameter] public string MinHeight { get; set; } = "220px";
     [Parameter] public string MaxHeight { get; set; } = "none";
+
+    /// <summary>Font size, in pixels, used by the rendered preview pane.</summary>
+    [Parameter] public int PreviewFontSize { get; set; } = 14;
+
+    /// <summary>
+    /// Wraps long editor and preview content to the available width and suppresses horizontal scrolling.
+    /// Disabled by default to preserve existing behavior.
+    /// </summary>
+    [Parameter] public bool FitContentToWidth { get; set; }
+
     [Parameter] public string? CssClass { get; set; }
     [Parameter] public string? PreviewCssClass { get; set; }
     [Parameter] public string Placeholder { get; set; } = "Write markdown...";
@@ -277,7 +288,27 @@
 
     [Parameter] public bool EnableScrollPreview { get; set; } = false;
 
+    /// <summary>Enables regular-expression based whole-line styling.</summary>
+    [Parameter] public bool EnableLineStyling { get; set; }
+
+    /// <summary>
+    /// Renders preview content as escaped, line-preserving text so individual lines can receive CSS classes.
+    /// Intended for logs and traces; leave disabled for normal Markdown rendering.
+    /// </summary>
+    [Parameter] public bool PreservePreviewLineBreaks { get; set; }
+
+    /// <summary>Ordered styling rules; the first matching rule wins for each line.</summary>
+    [Parameter] public IReadOnlyList<LwMarkdownLineStyleRule> LineStyleRules { get; set; }
+        = Array.Empty<LwMarkdownLineStyleRule>();
+
     [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private int EffectiveEditorFontSize => Math.Clamp(EditorOptions.FontSize, 8, 72);
+    private int EffectivePreviewFontSize => Math.Clamp(PreviewFontSize, 8, 72);
+    private string RootStyle =>
+        $"height:{Height};width:{Width};min-height:{MinHeight};max-height:{MaxHeight};" +
+        $"--lwx-md-editor-font-size:{EffectiveEditorFontSize}px;" +
+        $"--lwx-md-preview-font-size:{EffectivePreviewFontSize}px;";
 
     private bool EffectiveEnableEdit => EnableEdit && EnableMenu;
 
@@ -390,6 +421,20 @@
             mermaidUrl = options.MermaidUrl,
             highlightUrl = options.HighlightUrl,
             highlightThemeUrl = options.HighlightThemeUrl,
+            lineStyling = new
+            {
+                enabled = EnableLineStyling,
+                rules = LineStyleRules.Select(rule => new
+                {
+                    pattern = rule.Pattern,
+                    cssClass = rule.CssClass,
+                    cssStyle = rule.CssStyle,
+                    ignoreCase = rule.IgnoreCase,
+                    applyToEditor = rule.ApplyToEditor,
+                    applyToPreview = rule.ApplyToPreview,
+                    matchWholeLine = rule.MatchWholeLine
+                }).ToArray()
+            },
             theme = Theme,
             viewMode = EffectiveViewMode.ToString().ToLower(),
             splitOrientation = SplitOrientation.ToString().ToLower(),
@@ -402,7 +447,15 @@
                 language = EditorOptions.Language,
                 automaticLayout = EditorOptions.AutomaticLayout,
                 lineNumbers = EditorOptions.LineNumbers ? "on" : "off",
-                wordWrap = EditorOptions.LineWrapping ? "on" : "off",
+                wordWrap = FitContentToWidth || EditorOptions.LineWrapping ? "on" : "off",
+                wrappingIndent = "same",
+                wrappingStrategy = "advanced",
+                scrollbar = new
+                {
+                    horizontal = FitContentToWidth ? "hidden" : "auto",
+                    horizontalScrollbarSize = FitContentToWidth ? 0 : 10,
+                    alwaysConsumeMouseWheel = false
+                },
                 minimap = new { enabled = EnableScrollPreview || EditorOptions.Minimap },
                 tabSize = EditorOptions.TabSize,
                 wordBasedSuggestions = EditorOptions.WordBasedSuggestions ? "allDocuments" : "off",
@@ -446,14 +499,49 @@
     private void RenderMarkdown(bool notify)
     {
         var currentValue = Value ?? string.Empty;
-        if (_renderer is null || _lastRenderedValue != currentValue)
+        var renderSignature = BuildRenderSignature();
+
+        if (_renderer is null ||
+            _lastRenderedValue != currentValue ||
+            _lastRenderSignature != renderSignature)
         {
             _renderer = new LwMarkdownRenderer(CreateOptions());
-            _html = _renderer.Render(currentValue);
+            _html = _renderer.Render(
+                currentValue,
+                LineStyleRules,
+                EnableLineStyling,
+                PreservePreviewLineBreaks);
             ValueHTML = _html;
             _stats = CalculateStats(currentValue);
             _lastRenderedValue = currentValue;
+            _lastRenderSignature = renderSignature;
         }
+    }
+
+    private string BuildRenderSignature()
+    {
+        var builder = new System.Text.StringBuilder();
+        builder.Append(EnableLineStyling).Append('|')
+            .Append(PreservePreviewLineBreaks).Append('|')
+            .Append(EnableAdvancedExtensions).Append('|')
+            .Append(EnableBootstrap).Append('|')
+            .Append(EnableTables).Append('|')
+            .Append(EnableTaskLists).Append('|')
+            .Append(EnableAutoLinks).Append('|')
+            .Append(EnableEmoji);
+
+        foreach (var rule in LineStyleRules)
+        {
+            builder.Append("||")
+                .Append(rule.Pattern).Append('|')
+                .Append(rule.CssClass).Append('|')
+                .Append(rule.IgnoreCase).Append('|')
+                .Append(rule.ApplyToEditor).Append('|')
+                .Append(rule.ApplyToPreview).Append('|')
+                .Append(rule.MatchWholeLine);
+        }
+
+        return builder.ToString();
     }
 
     private async Task OnTextAreaInputAsync(ChangeEventArgs args)
