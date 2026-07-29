@@ -1,5 +1,10 @@
 # LwXLab.Markdown
 
+## High-frequency external values
+
+`DeferPreviewRenderingWhenHidden` is an opt-in performance setting for edit-only views such as live logs. When enabled, Markdown HTML is not regenerated while the preview pane is hidden; switching to Preview or Split renders the current value normally. Externally supplied `Value` changes are synchronized into Monaco without feeding the same programmatic update back through `ValueChanged`.
+
+
 Blazor Markdown editor/preview component using:
 
 - Monaco Editor for editing

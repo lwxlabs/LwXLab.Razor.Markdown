@@ -5,11 +5,11 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PackageId>LwXLab.Razor.Markdown</PackageId>
-		<Version>1.0.0-preview.3</Version>
+		<Version>1.0.0-preview.5</Version>
 		<Authors>LwXLabs</Authors>
 		<Title>LwXLab Markdown Editor</Title>
 		<Description>Blazor Markdown editor/preview component.</Description>
-		<PackageReleaseNotes>Adds preview font sizing and opt-in fit-to-width wrapping for Monaco, textarea, preview, line-oriented logs, code blocks, tables, and media. Retains regex line styling with CSS classes or direct CSS declarations.</PackageReleaseNotes>
+		<PackageReleaseNotes>Adds deferred preview rendering for edit-only high-frequency log views and synchronizes externally supplied values into Monaco without emitting recursive value-change callbacks. Retains preview font sizing, fit-to-width wrapping, and regex line styling.</PackageReleaseNotes>
 		<Authors>LwXLabs</Authors>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/lwxlabs/LwXLab.Razor.Markdown</RepositoryUrl>

@@ -3,6 +3,7 @@ const instanceOptions = new Map();
 const linkedScrollStates = new Map();
 const lineDecorationCollections = new Map();
 const lineStyleElements = new Map();
+const programmaticEditorUpdates = new Set();
 let monacoLoaderPromise = null;
 let mermaidPromise = null;
 let highlightPromise = null;
@@ -56,6 +57,7 @@ export async function init(rootId, editorId, previewId, resizerId, dotNetRef, op
                 const value = editor.getValue();
                 textarea.value = value;
                 applyEditorLineStyles(rootId, editorId);
+                if (programmaticEditorUpdates.has(editorId)) return;
                 clearTimeout(debounce);
                 debounce = setTimeout(() => dotNetRef.invokeMethodAsync('UpdateValueFromJs', value), 80);
             });
@@ -378,8 +380,13 @@ export function setEditorValue(editorId, value) {
     const editor = editors.get(editorId);
     if (editor && editor.getValue() !== value) {
         const position = editor.getPosition();
-        editor.setValue(value || '');
-        if (position) editor.setPosition(position);
+        programmaticEditorUpdates.add(editorId);
+        try {
+            editor.setValue(value || '');
+            if (position) editor.setPosition(position);
+        } finally {
+            programmaticEditorUpdates.delete(editorId);
+        }
         const root = editor.getDomNode?.()?.closest?.('.lwx-md');
         if (root?.id) applyEditorLineStyles(root.id, editorId);
         return;
@@ -559,6 +566,7 @@ export function updateOptions(rootId, editorId, options) {
 }
 
 export function dispose(editorId) {
+    programmaticEditorUpdates.delete(editorId);
     clearEditorLineStyles(editorId);
     const editor = editors.get(editorId);
     if (editor) {
