@@ -1,0 +1,44 @@
+name: publish-private-packages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.401
+
+      - name: Build and pack
+        run: ./build/pack.sh
+
+      - name: Publish package to the private GitHub feed
+        env:
+          GH_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          dotnet nuget add source \
+            --username "${{ github.actor }}" \
+            --password "$GH_PACKAGES_TOKEN" \
+            --store-password-in-clear-text \
+            --name lwxlabs-github \
+            "https://nuget.pkg.github.com/lwxlabs/index.json"
+          shopt -s nullglob
+          packages=(artifacts/release/*.nupkg)
+          test "${#packages[@]}" -eq 1
+          dotnet nuget push "${packages[0]}" \
+            --source lwxlabs-github \
+            --api-key "$GH_PACKAGES_TOKEN" \
+            --skip-duplicate

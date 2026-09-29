@@ -4,19 +4,26 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);CS1591</NoWarn>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<PackageId>LwXLab.Razor.Markdown</PackageId>
 		<Version>1.0.0-preview.5</Version>
-		<Authors>LwXLabs</Authors>
-		<Title>LwXLab Markdown Editor</Title>
+		<Authors>lwxlabs</Authors>
+		<Company>lwxlabs</Company>
+		<Copyright>Copyright (c) 2025-2026 lwxlabs</Copyright>
+		<Title>LwXLab.Razor.Markdown</Title>
 		<Description>Blazor Markdown editor/preview component.</Description>
 		<PackageReleaseNotes>Adds deferred preview rendering for edit-only high-frequency log views and synchronizes externally supplied values into Monaco without emitting recursive value-change callbacks. Retains preview font sizing, fit-to-width wrapping, and regex line styling.</PackageReleaseNotes>
-		<Authors>LwXLabs</Authors>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageProjectUrl>https://github.com/lwxlabs/LwXLab.Razor.Markdown</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/lwxlabs/LwXLab.Razor.Markdown</RepositoryUrl>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
-
 		<RepositoryType>git</RepositoryType>
-		<IncludeSymbols>true</IncludeSymbols>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<IncludeSymbols>false</IncludeSymbols>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
 		
 		<StaticWebAssetBasePath>_content/LwXLab.Markdown</StaticWebAssetBasePath>
 	</PropertyGroup>
@@ -32,6 +39,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Markdig" Version="0.37.0" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401" PrivateAssets="All" />
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 </Project>

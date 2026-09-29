@@ -1,8 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-if exist artifacts rmdir /s /q artifacts
-dotnet pack "LwXLab.Markdown.csproj" -c Release -o artifacts
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0build\pack.ps1"
 if errorlevel 1 (
   echo.
   echo Markdown package failed.
@@ -10,5 +9,5 @@ if errorlevel 1 (
   exit /b 1
 )
 echo.
-echo Created artifacts\LwXLab.Razor.Markdown.1.0.0-preview.3.nupkg
+echo Package created in artifacts\release
 pause

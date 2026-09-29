@@ -1,4 +1,4 @@
-# LwXLab.Markdown
+# LwXLab.Razor.Markdown
 
 ## High-frequency external values
 
@@ -14,15 +14,17 @@ Blazor Markdown editor/preview component using:
 
 Targets: `net8.0`, `net9.0`, `net10.0`.
 
-## Install locally
+## Install
 
-Add the project to your solution:
+Private GitHub Packages consumers can install the package with:
 
 ```bash
-dotnet sln add src/LwXLab.Markdown/LwXLab.Markdown.csproj
+dotnet add package LwXLab.Razor.Markdown --version 1.0.0-preview.5
 ```
 
-Reference it from your Blazor app:
+See `PRIVATE_PACKAGES.md` for configuring the private `lwxlabs` NuGet feed.
+
+For local source development, reference the project directly:
 
 ```bash
 dotnet add YourApp.csproj reference ../LwXLab.Markdown/LwXLab.Markdown.csproj
@@ -112,7 +114,7 @@ Important component parameters:
 
 ## Font size and fit-to-width
 
-Version `1.0.0-preview.3` keeps the existing Monaco editor font controls and adds preview sizing plus an opt-in fit-to-width mode.
+Version `1.0.0-preview.5` keeps the existing Monaco editor font controls and adds preview sizing plus an opt-in fit-to-width mode.
 
 ```razor
 @using LwXLab.Markdown.Options
