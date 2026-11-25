@@ -21,6 +21,9 @@ jobs:
             9.0.x
             10.0.401
 
+      - name: Test
+        run: dotnet test LwXLab.Markdown.slnx -c Release
+
       - name: Build and pack
         run: ./build/pack.sh
 

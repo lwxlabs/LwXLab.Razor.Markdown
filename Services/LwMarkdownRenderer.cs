@@ -32,6 +32,9 @@ public sealed class LwMarkdownRenderer
         if (options.EnableBootstrap)
             builder.UseBootstrap();
 
+        if (!options.EnableHtml)
+            builder.DisableHtml();
+
         _pipeline = builder.Build();
     }
 

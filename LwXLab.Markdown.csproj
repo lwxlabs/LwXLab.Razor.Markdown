@@ -12,7 +12,9 @@
 		<Company>lwxlabs</Company>
 		<Copyright>Copyright (c) 2025-2026 lwxlabs</Copyright>
 		<Title>LwXLab.Razor.Markdown</Title>
-		<Description>Blazor Markdown editor/preview component.</Description>
+		<Description>Configurable Markdown editor and live preview for Blazor, with Monaco, Markdig and Mermaid.</Description>
+		<PackageTags>blazor;markdown;monaco;mermaid;editor;razor</PackageTags>
+		<DefaultItemExcludes>$(DefaultItemExcludes);tests/**</DefaultItemExcludes>
 		<PackageReleaseNotes>Adds deferred preview rendering for edit-only high-frequency log views and synchronizes externally supplied values into Monaco without emitting recursive value-change callbacks. Retains preview font sizing, fit-to-width wrapping, and regex line styling.</PackageReleaseNotes>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

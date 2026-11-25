@@ -1,11 +1,6 @@
 # LwXLab.Razor.Markdown
 
-## High-frequency external values
-
-`DeferPreviewRenderingWhenHidden` is an opt-in performance setting for edit-only views such as live logs. When enabled, Markdown HTML is not regenerated while the preview pane is hidden; switching to Preview or Split renders the current value normally. Externally supplied `Value` changes are synchronized into Monaco without feeding the same programmatic update back through `ValueChanged`.
-
-
-Blazor Markdown editor/preview component using:
+Blazor Markdown editor and live preview using:
 
 - Monaco Editor for editing
 - Markdig for Markdown rendering
@@ -16,15 +11,7 @@ Targets: `net8.0`, `net9.0`, `net10.0`.
 
 ## Install
 
-Private GitHub Packages consumers can install the package with:
-
-```bash
-dotnet add package LwXLab.Razor.Markdown --version 1.0.0-preview.5
-```
-
-See `PRIVATE_PACKAGES.md` for configuring the private `lwxlabs` NuGet feed.
-
-For local source development, reference the project directly:
+Build from source (no private feed required). Reference the project directly:
 
 ```bash
 dotnet add YourApp.csproj reference ../LwXLab.Markdown/LwXLab.Markdown.csproj
@@ -160,7 +147,7 @@ Version `1.0.0-preview.5` keeps the existing Monaco editor font controls and add
 ## Notes
 
 - Monaco, Mermaid and highlight.js are loaded from CDN by default. Override URLs with `LwMarkdownOptions` when you want self-hosted static assets.
-- For a production public editor, add HTML sanitization before storing/displaying untrusted content. This skeleton keeps HTML enabled because developer documentation often needs raw HTML.
+- Raw HTML is enabled by default for trusted documentation. Set EnableHtml="false" to disable raw HTML parsing. For untrusted content, sanitize the generated HTML and validate links before displaying it.
 
 
 ## Line styling for logs and diagnostics
